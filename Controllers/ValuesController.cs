@@ -8,6 +8,29 @@ using QC = System.Data.SqlClient;  // System.Data.dll
 
 namespace Zelda.Controllers
 {
+
+    public class FullName
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string BirthDate { get; set; }
+
+        public string Title { get; set; }
+
+        public string Url { get; set; }
+
+        public string Description { get; set; }
+
+        public string OwnerName { get; set; }
+
+        public string Category { get; set; }
+
+        public string Points { get; set; }
+    }
+
+
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -28,25 +51,13 @@ namespace Zelda.Controllers
                 connection.Open();  
                 Console.WriteLine("Connected successfully.");  
 
-
-                //Program.DeleteRows(connection);
-                Console.WriteLine("Select below."); 
                 received = ValuesController.SelectRows(connection);
                 Console.WriteLine(received);
-                Console.WriteLine("Select above");  
             }
 
 
             return received;
         }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
 
         // POST api/values
         [HttpPost] 
@@ -68,7 +79,6 @@ namespace Zelda.Controllers
                 connection.Open();  
                 Console.WriteLine("Connected successfully.");  
 
-                Console.WriteLine("Insert below");  
                 ValuesController.InsertRows(connection, inputFirstName,
                                                         inputLastName,
                                                         inputBirthDate,
@@ -78,22 +88,9 @@ namespace Zelda.Controllers
                                                         inputOwnerName,
                                                         inputCategory,
                                                         inputPoints);
-                Console.WriteLine("Insert closed"); 
 
             }
 
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
 
 
@@ -106,19 +103,19 @@ namespace Zelda.Controllers
                 command.Connection = connection;  
                 command.CommandType = DT.CommandType.Text;  
                 command.CommandText = @"  
-                        SELECT  
-                                FirstName,
-                                LastName,
-                                BirthDate,
-                                Title,
-                                Url,
-                                Description,
-                                OwnerName,
-                                Category,
-                                Points
-                            FROM  
-                                ganondorf  
-                             ";  
+                                        SELECT  
+                                                FirstName,
+                                                LastName,
+                                                BirthDate,
+                                                Title,
+                                                Url,
+                                                Description,
+                                                OwnerName,
+                                                Category,
+                                                Points
+                                            FROM  
+                                                ganondorf  
+                                             ";  
 
                 QC.SqlDataReader reader = command.ExecuteReader();  
                 
@@ -162,30 +159,30 @@ namespace Zelda.Controllers
                 command.Connection = connection;  
                 command.CommandType = DT.CommandType.Text;  
                 command.CommandText = @"  
-                        INSERT INTO ganondorf 
-                                (FirstName,
-                                LastName,
-                                BirthDate,
-                                Title,
-                                Url,
-                                Description,
-                                OwnerName,
-                                Category,
-                                Points
-                                )  
-                            OUTPUT  
-                                INSERTED.Title  
-                            VALUES  
-                                (@FirstName,
-                                @LastName,
-                                @BirthDate,
-                                @Title,
-                                @Url,
-                                @Description,
-                                @OwnerName,
-                                @Category,
-                                @Points
-                                ); ";  
+                                        INSERT INTO ganondorf 
+                                                (FirstName,
+                                                LastName,
+                                                BirthDate,
+                                                Title,
+                                                Url,
+                                                Description,
+                                                OwnerName,
+                                                Category,
+                                                Points
+                                                )  
+                                            OUTPUT  
+                                                INSERTED.Title  
+                                            VALUES  
+                                                (@FirstName,
+                                                @LastName,
+                                                @BirthDate,
+                                                @Title,
+                                                @Url,
+                                                @Description,
+                                                @OwnerName,
+                                                @Category,
+                                                @Points
+                                                ); ";  
 
 
                 parameter = new QC.SqlParameter("@FirstName", DT.SqlDbType.NVarChar, 255);  
@@ -232,26 +229,6 @@ namespace Zelda.Controllers
 
     }
 
-    public class FullName
-    {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string BirthDate { get; set; }
-
-        public string Title { get; set; }
-
-        public string Url { get; set; }
-
-        public string Description { get; set; }
-
-        public string OwnerName { get; set; }
-
-        public string Category { get; set; }
-
-        public string Points { get; set; }
-    }
 
 
 }
